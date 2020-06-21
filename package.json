@@ -1,0 +1,60 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "tagesschau-analyzer",
+  "author": "Lukas Lamm",
+  "module": "dist/tagesschau-analyzer.esm.js",
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/commander": "^2.12.2",
+    "@types/dotenv": "^8.2.0",
+    "@types/he": "^1.1.1",
+    "@types/mongoose": "^5.7.27",
+    "@types/node": "^14.0.13",
+    "husky": "^4.2.5",
+    "tsdx": "^0.13.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^5.1.0",
+    "dotenv": "^8.2.0",
+    "fast-xml-parser": "^3.17.4",
+    "fs": "0.0.1-security",
+    "he": "^1.2.0",
+    "https": "^1.0.0",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.19",
+    "path": "^0.12.7",
+    "winston": "^3.2.1"
+  }
+}
