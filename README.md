@@ -1,6 +1,12 @@
-# TSDX Bootstrap
+# tagesschau-analyzer
 
 This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
+
+## Run scraper
+
+```sh-session
+node dist/index.js scrape
+```
 
 ## Local Development
 
