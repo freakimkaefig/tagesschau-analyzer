@@ -2,8 +2,6 @@ import https from 'https';
 import parser from 'fast-xml-parser';
 
 export class HttpClient {
-  constructor() {}
-
   get(queryUrl: string) {
     return new Promise((resolve, reject) => {
       const req = https.get(queryUrl, (res: any) => {
@@ -33,6 +31,7 @@ export class HttpClient {
       });
 
       req.on('error', (error: any) => {
+        console.error('HttpService.get', 'CONNECTION_ERROR', error);
         reject(error);
       });
     });

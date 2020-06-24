@@ -1,14 +1,17 @@
 import { Schema, Document, Model, model } from 'mongoose';
+import { Moment } from 'moment';
 
 const ShowSchema = new Schema({
-  showId: Number,
+  date: Date,
   time: String,
+  showId: Number,
   text: String,
 });
 
 export interface IShow {
-  showId: number;
+  date: Moment;
   time: string;
+  showId: number;
   text: string;
 }
 
