@@ -7,7 +7,11 @@ export class HttpClient {
       const req = https.get(queryUrl, (res: any) => {
         // reject on bad status
         if (res.statusCode < 200 || res.statusCode >= 300) {
-          return reject(new Error('statusCode=' + res.statusCode));
+          return reject({
+            type: 'http',
+            code: res.statusCode,
+            query: queryUrl,
+          });
         }
 
         // cumulate data

@@ -5,6 +5,7 @@ const ShowSchema = new Schema({
   date: Date,
   time: String,
   showId: Number,
+  ut: Boolean,
   text: String,
 });
 
@@ -12,7 +13,8 @@ export interface IShow {
   date: Moment;
   time: string;
   showId: number;
-  text: string;
+  ut: boolean;
+  text?: string;
 }
 
 export interface IShowDocument extends IShow, Document {}

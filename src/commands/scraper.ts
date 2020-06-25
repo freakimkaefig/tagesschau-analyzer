@@ -35,41 +35,43 @@ export class ScrapeCommand {
         const promises: Promise<IShow>[] = [];
 
         result.forEach(shows => {
-          const show = shows[0];
-          const date = moment(show.date);
+          if (shows.length) {
+            const show = shows[0];
+            const date = moment(show.date);
 
-          // Calculate days between today and last show
-          const diff = now.diff(date, 'days');
+            // Calculate days between today and last show
+            const diff = now.diff(date, 'days');
 
-          // Set show id to last id
-          let idCounter = show.showId;
+            // Set show id to last id
+            let idCounter = show.showId;
 
-          // Iterate over diff days
-          for (let i = 0; i < diff; i++) {
-            date.add(1, 'days');
-            const dow = date.day();
+            // Iterate over diff days
+            for (let i = 0; i < diff; i++) {
+              date.add(1, 'days');
+              const dow = date.day();
 
-            // Lookup if time is broadcasted on defined day
-            if (airtimes[dow].times.includes(show.time)) {
-              // temporary time object for comparison
-              const tempShowTime = moment(
-                now.format('YYYY-MM-DD ' + show.time),
-                'YYYY-MM-DD HH-mm'
-              );
-
-              // Check if show time has already been broadcasted today
-              if (now > tempShowTime) {
-                // scrape show
-                promises.push(
-                  this.scrapeShow(
-                    idCounter + 2,
-                    show.time,
-                    moment(date.toISOString())
-                  )
+              // Lookup if time is broadcasted on defined day
+              if (airtimes[dow].times.includes(show.time)) {
+                // temporary time object for comparison
+                const tempShowTime = moment(
+                  now.format('YYYY-MM-DD ' + show.time),
+                  'YYYY-MM-DD HH-mm'
                 );
 
-                // increase show counter
-                idCounter += 2;
+                // Check if show time has already been broadcasted today
+                if (now > tempShowTime) {
+                  // scrape show
+                  promises.push(
+                    this.scrapeShow(
+                      idCounter + 2,
+                      show.time,
+                      moment(date.toISOString())
+                    )
+                  );
+
+                  // increase show counter
+                  idCounter += 2;
+                }
               }
             }
           }
@@ -101,6 +103,13 @@ export class ScrapeCommand {
             } (${show.showId})`
           );
         });
+      })
+      .catch((error: { type: string; code?: number; query?: string }) => {
+        if (error.type === 'http') {
+          console.warn(error.code, error.query);
+        } else {
+          console.error(error);
+        }
       })
       .finally(() => {
         this.mongoClient.disconnect();
@@ -137,14 +146,15 @@ export class ScrapeCommand {
         return Promise.resolve(false);
       })
       .then((data: any) => {
-        const show = {
+        let show: any = {
           date: date,
           time: time,
           showId: id,
-          text: '',
+          ut: false,
         };
 
         if (data) {
+          show.ut = true;
           show.text = this.traverse(
             data['tt:tt']['tt:body']['tt:div']['tt:p']
           ).join('\n');

@@ -6,12 +6,6 @@ import { ShowModel, IShowDocument, IShow } from '../models/show.model';
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-// interface ShowResponse {
-//   time: string;
-//   showId: number;
-//   text: string;
-// }
-
 export class MongoClient {
   private connectionUrl: string = '';
   private connectionOptions: any = {};
