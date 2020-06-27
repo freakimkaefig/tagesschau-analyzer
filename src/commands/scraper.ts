@@ -16,6 +16,7 @@ export class ScrapeCommand {
   }
 
   public async run(): Promise<void> {
+    console.log(`${this.timestamp()}: Start scraping ...`);
     const connection = this.mongoClient.connect();
 
     const now = moment().subtract(2, 'hours');
@@ -44,6 +45,11 @@ export class ScrapeCommand {
 
             // Set show id to last id
             let idCounter = show.showId;
+            console.log(
+              `${this.timestamp()}: Retrieved last id for show time ${
+                show.time
+              }: ${show.showId}`
+            );
 
             // Iterate over diff days
             for (let i = 0; i < diff; i++) {
@@ -60,17 +66,25 @@ export class ScrapeCommand {
 
                 // Check if show time has already been broadcasted today
                 if (now > tempShowTime) {
+                  // increase show counter
+                  idCounter += 2;
+
                   // scrape show
                   promises.push(
                     this.scrapeShow(
-                      idCounter + 2,
+                      idCounter,
                       show.time,
                       moment(date.toISOString())
                     )
                   );
 
-                  // increase show counter
-                  idCounter += 2;
+                  console.log(
+                    `${this.timestamp()}: Enqueued show at ${
+                      show.time
+                    } (${idCounter}) from ${moment(date.toISOString()).format(
+                      'YYYY-MM-DD'
+                    )} for scraping`
+                  );
                 }
               }
             }
@@ -86,6 +100,14 @@ export class ScrapeCommand {
         result.forEach(show => {
           // add show to database
           promises.push(this.mongoClient.addShow(show));
+
+          console.log(
+            `${this.timestamp()}: Enqueued show at ${show.time} (${
+              show.showId
+            }) from ${moment(show.date).format(
+              'YYYY-MM-DD'
+            )} for saving to database`
+          );
         });
 
         return Promise.all(promises);
@@ -98,17 +120,17 @@ export class ScrapeCommand {
         }
         result.forEach((show: IShow) => {
           console.log(
-            `Added show from ${moment(show.date).format('YYYY-MM-DD')} ${
-              show.time
-            } (${show.showId})`
+            `${this.timestamp()}: Added show from ${moment(show.date).format(
+              'YYYY-MM-DD'
+            )} ${show.time} (${show.showId}) to database`
           );
         });
       })
       .catch((error: { type: string; code?: number; query?: string }) => {
         if (error.type === 'http') {
-          console.warn(error.code, error.query);
+          console.warn(`${this.timestamp()}:`, error.code, error.query);
         } else {
-          console.error(error);
+          console.error(`${this.timestamp()}:`, error);
         }
       })
       .finally(() => {
@@ -178,5 +200,9 @@ export class ScrapeCommand {
     if (tree['tt:span']) {
       return this.traverse(tree['tt:span']);
     }
+  }
+
+  private timestamp(): string {
+    return moment().format();
   }
 }
