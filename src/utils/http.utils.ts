@@ -1,5 +1,6 @@
 import https from 'https';
 import parser from 'fast-xml-parser';
+import moment from 'moment';
 
 export class HttpClient {
   get(queryUrl: string) {
@@ -7,11 +8,8 @@ export class HttpClient {
       const req = https.get(queryUrl, (res: any) => {
         // reject on bad status
         if (res.statusCode < 200 || res.statusCode >= 300) {
-          return reject({
-            type: 'http',
-            code: res.statusCode,
-            query: queryUrl,
-          });
+          console.warn(`${moment().format()}:`, res.statusCode, queryUrl);
+          resolve(false);
         }
 
         // cumulate data
@@ -27,7 +25,8 @@ export class HttpClient {
           try {
             json = parser.parse(xml, { ignoreAttributes: false });
           } catch (error) {
-            reject(error);
+            console.error(`${moment().format()}:`, error);
+            resolve(false);
           }
 
           resolve(json);

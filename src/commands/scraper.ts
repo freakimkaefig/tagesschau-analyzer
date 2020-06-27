@@ -19,7 +19,7 @@ export class ScrapeCommand {
     console.log(`${this.timestamp()}: Start scraping ...`);
     const connection = this.mongoClient.connect();
 
-    const now = moment().subtract(2, 'hours');
+    const now = moment().add(1, 'day');
 
     connection
       .then(() => {
@@ -48,7 +48,9 @@ export class ScrapeCommand {
             console.log(
               `${this.timestamp()}: Retrieved last id for show time ${
                 show.time
-              }: ${show.showId}`
+              }: ${show.showId} (${moment(show.date).format(
+                'YYYY-MM-DD'
+              )} - ${diff})`
             );
 
             // Iterate over diff days
@@ -60,7 +62,7 @@ export class ScrapeCommand {
               if (airtimes[dow].times.includes(show.time)) {
                 // temporary time object for comparison
                 const tempShowTime = moment(
-                  now.format('YYYY-MM-DD ' + show.time),
+                  moment(show.date).format('YYYY-MM-DD ' + show.time),
                   'YYYY-MM-DD HH-mm'
                 );
 
@@ -99,7 +101,9 @@ export class ScrapeCommand {
         // iterate over results
         result.forEach(show => {
           // add show to database
-          promises.push(this.mongoClient.addShow(show));
+          if (show.ut) {
+            promises.push(this.mongoClient.addShow(show));
+          }
 
           console.log(
             `${this.timestamp()}: Enqueued show at ${show.time} (${
