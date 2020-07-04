@@ -155,10 +155,20 @@ export class ScrapeCommand {
     date: Moment
   ): Promise<IShow> {
     const url = `https://www.daserste.de/information/nachrichten-wetter/tagesschau/videosextern/tagesschau-${time}-uhr-${id}~playerXml.xml`;
+    let showDate = date;
 
     return this.httpClient
       .get(url)
       .then((data: any) => {
+        if (
+          data &&
+          data.playlist &&
+          data.playlist.video &&
+          data.playlist.video.broadcastDate
+        ) {
+          showDate = moment(data.playlist.video.broadcastDate);
+        }
+
         if (
           data &&
           data.playlist &&
@@ -175,7 +185,7 @@ export class ScrapeCommand {
       })
       .then((data: any) => {
         let show: any = {
-          date: date,
+          date: showDate,
           time: time,
           showId: id,
           ut: false,
