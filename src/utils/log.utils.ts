@@ -1,4 +1,5 @@
 import * as winston from 'winston';
+import 'winston-daily-rotate-file';
 
 export class LogClient {
   private logger: winston.Logger;
@@ -8,11 +9,13 @@ export class LogClient {
       level: 'info',
       format: winston.format.json(),
       transports: [
-        new winston.transports.File({
-          filename: 'logs/error.log',
-          level: 'error',
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/daily-log-%DATE%.log',
+          createSymlink: true,
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxFiles: '14d',
         }),
-        new winston.transports.File({ filename: 'logs/debug.log' }),
       ],
     });
   }
