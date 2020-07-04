@@ -1,14 +1,23 @@
 import https from 'https';
 import parser from 'fast-xml-parser';
-import moment from 'moment';
+import { LogClient } from './log.utils';
 
 export class HttpClient {
+  private logger: LogClient;
+
+  constructor(logClient: LogClient) {
+    this.logger = logClient;
+  }
+
   get(queryUrl: string) {
     return new Promise((resolve, reject) => {
       const req = https.get(queryUrl, (res: any) => {
         // reject on bad status
         if (res.statusCode < 200 || res.statusCode >= 300) {
-          console.warn(`${moment().format()}:`, res.statusCode, queryUrl);
+          this.logger.error('HttpClient.get', {
+            code: res.statusCode,
+            query: queryUrl,
+          });
           resolve(false);
         }
 
@@ -25,7 +34,7 @@ export class HttpClient {
           try {
             json = parser.parse(xml, { ignoreAttributes: false });
           } catch (error) {
-            console.error(`${moment().format()}:`, error);
+            this.logger.error('HttpClient.get', error);
             resolve(false);
           }
 
@@ -34,7 +43,7 @@ export class HttpClient {
       });
 
       req.on('error', (error: any) => {
-        console.error('HttpService.get', 'CONNECTION_ERROR', error);
+        this.logger.error('HttpClient.get', error);
         reject(error);
       });
     });

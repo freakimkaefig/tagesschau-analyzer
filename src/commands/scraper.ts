@@ -2,21 +2,25 @@ import moment, { Moment } from 'moment';
 
 import { times, airtimes } from '../config/show.config';
 
+import { LogClient } from '../utils/log.utils';
 import { HttpClient } from '../utils/http.utils';
 import { MongoClient } from '../utils/mongo.utils';
 import { IShowDocument, IShow } from 'models/show.model';
 
 export class ScrapeCommand {
+  private logger: LogClient;
   private httpClient: HttpClient;
   private mongoClient: MongoClient;
 
   constructor() {
-    this.httpClient = new HttpClient();
-    this.mongoClient = new MongoClient();
+    this.logger = new LogClient();
+
+    this.httpClient = new HttpClient(this.logger);
+    this.mongoClient = new MongoClient(this.logger);
   }
 
   public async run(): Promise<void> {
-    console.log(`${this.timestamp()}: Start scraping ...`);
+    this.logger.log('ScrapeCommand.run', `Start scraping ...`);
     const connection = this.mongoClient.connect();
 
     const now = moment().add(1, 'day');
@@ -45,12 +49,11 @@ export class ScrapeCommand {
 
             // Set show id to last id
             let idCounter = show.showId;
-            console.log(
-              `${this.timestamp()}: Retrieved last id for show time ${
-                show.time
-              }: ${show.showId} (${moment(show.date).format(
-                'YYYY-MM-DD'
-              )} - ${diff})`
+            this.logger.log(
+              'ScrapeCommand.run',
+              `Retrieved last id for show time ${show.time}: ${
+                show.showId
+              } (${moment(show.date).format('YYYY-MM-DD')} - ${diff})`
             );
 
             // Iterate over diff days
@@ -80,12 +83,11 @@ export class ScrapeCommand {
                     )
                   );
 
-                  console.log(
-                    `${this.timestamp()}: Enqueued show at ${
-                      show.time
-                    } (${idCounter}) from ${moment(date.toISOString()).format(
-                      'YYYY-MM-DD'
-                    )} for scraping`
+                  this.logger.log(
+                    'ScrapeCommand.run',
+                    `Enqueued show at ${show.time} (${idCounter}) from ${moment(
+                      date.toISOString()
+                    ).format('YYYY-MM-DD')} for scraping`
                   );
                 }
               }
@@ -105,12 +107,11 @@ export class ScrapeCommand {
             promises.push(this.mongoClient.addShow(show));
           }
 
-          console.log(
-            `${this.timestamp()}: Enqueued show at ${show.time} (${
-              show.showId
-            }) from ${moment(show.date).format(
-              'YYYY-MM-DD'
-            )} for saving to database`
+          this.logger.log(
+            'ScrapeCommand.run',
+            `Enqueued show at ${show.time} (${show.showId}) from ${moment(
+              show.date
+            ).format('YYYY-MM-DD')} for saving to database`
           );
         });
 
@@ -120,21 +121,22 @@ export class ScrapeCommand {
         // TODO: log result to logfile
 
         if (!result.length) {
-          console.log('No new shows added!');
+          this.logger.log('ScrapeCommand.run', 'No new shows added!');
         }
         result.forEach((show: IShow) => {
-          console.log(
-            `${this.timestamp()}: Added show from ${moment(show.date).format(
-              'YYYY-MM-DD'
-            )} ${show.time} (${show.showId}) to database`
+          this.logger.log(
+            'ScrapeCommand.run',
+            `Added show from ${moment(show.date).format('YYYY-MM-DD')} ${
+              show.time
+            } (${show.showId}) to database`
           );
         });
       })
       .catch((error: { type: string; code?: number; query?: string }) => {
         if (error.type === 'http') {
-          console.warn(`${this.timestamp()}:`, error.code, error.query);
+          this.logger.error('ScrapeCommand.run', error);
         } else {
-          console.error(`${this.timestamp()}:`, error);
+          this.logger.error('ScrapeCommand.run', error);
         }
       })
       .finally(() => {
@@ -204,9 +206,5 @@ export class ScrapeCommand {
     if (tree['tt:span']) {
       return this.traverse(tree['tt:span']);
     }
-  }
-
-  private timestamp(): string {
-    return moment().format();
   }
 }

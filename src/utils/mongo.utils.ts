@@ -2,15 +2,20 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 
+import { LogClient } from './log.utils';
 import { ShowModel, IShowDocument, IShow } from '../models/show.model';
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
 export class MongoClient {
+  private logger: LogClient;
+
   private connectionUrl: string = '';
   private connectionOptions: any = {};
 
-  constructor() {
+  constructor(logClient: LogClient) {
+    this.logger = logClient;
+
     const { MONGO_URI } = process.env;
     if (MONGO_URI !== undefined) {
       this.connectionUrl = MONGO_URI;
@@ -46,29 +51,26 @@ export class MongoClient {
         this.connectionOptions as mongoose.ConnectionOptions
       )
       .then(() => {
-        mongoose.connection.on('error', error => {
-          console.error('MongoService.connect', 'FATAL_ERROR', {
-            errorMessage: error.message,
-            error,
-          });
+        mongoose.connection.on('error', (error: any) => {
+          this.logger.error('MongoClient.connect', error);
         });
 
-        mongoose.connection.on('close', info => {
+        mongoose.connection.on('close', (info: any) => {
           if (info) {
-            console.warn('MongoClient.connect', 'MONGO_CLOSE', info);
+            this.logger.log('MongoClient.connect', info);
           }
         });
 
-        mongoose.connection.on('disconnected', info => {
+        mongoose.connection.on('disconnected', (info: any) => {
           if (info) {
-            console.warn('MongoClient.connect', 'MONGO_DISCONNECT', info);
+            this.logger.log('MongoClient.connect', info);
           }
         });
 
         return Promise.resolve();
       })
       .catch((error: any) => {
-        console.error('MongoClient.connect', 'CONNECTION_FAILED', error);
+        this.logger.error('MongoClient.connect', error);
 
         return Promise.reject(error);
       });
