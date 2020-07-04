@@ -38,6 +38,7 @@ describe('test mongoose ShowModel', () => {
       date: new Date('2020-06-20T20:00:00').toISOString(),
       time: '20-00',
       showId: 1234,
+      ut: true,
       text: 'Lorem ispum',
     });
 
