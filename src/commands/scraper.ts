@@ -45,7 +45,8 @@ export class ScrapeCommand {
             const date = moment(show.date);
 
             // Calculate days between today and last show
-            const diff = now.diff(date, 'days');
+            const diff =
+              now.diff(date, 'days') <= 14 ? now.diff(date, 'days') : 14;
 
             // Set show id to last id
             let idCounter = show.showId;
