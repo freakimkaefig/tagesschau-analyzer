@@ -7,7 +7,12 @@ export class LogClient {
   constructor() {
     this.logger = winston.createLogger({
       level: 'info',
-      format: winston.format.json(),
+      format: winston.format.combine(
+        winston.format.timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss',
+        }),
+        winston.format.json()
+      ),
       transports: [
         new winston.transports.DailyRotateFile({
           filename: 'logs/daily-log-%DATE%.log',
@@ -15,6 +20,9 @@ export class LogClient {
           datePattern: 'YYYY-MM-DD',
           zippedArchive: true,
           maxFiles: '14d',
+        }),
+        new winston.transports.Console({
+          format: winston.format.simple(),
         }),
       ],
     });
