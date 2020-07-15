@@ -21,9 +21,7 @@ export class LogClient {
           zippedArchive: true,
           maxFiles: '14d',
         }),
-        new winston.transports.Console({
-          format: winston.format.simple(),
-        }),
+        new winston.transports.Console(),
       ],
     });
   }

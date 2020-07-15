@@ -20,7 +20,7 @@ export class ScrapeCommand {
   }
 
   public async run(): Promise<void> {
-    this.logger.log('ScrapeCommand.run', `Start scraping ...`);
+    this.logger.log('ScrapeCommand.run:23', `Start scraping ...`);
     const connection = this.mongoClient.connect();
 
     const now = moment().add(1, 'day');
@@ -51,7 +51,7 @@ export class ScrapeCommand {
             // Set show id to last id
             let idCounter = show.showId;
             this.logger.log(
-              'ScrapeCommand.run',
+              'ScrapeCommand.run:53',
               `Retrieved last id for show time ${show.time}: ${
                 show.showId
               } (${moment(show.date).format('YYYY-MM-DD')} - ${diff})`
@@ -85,7 +85,7 @@ export class ScrapeCommand {
                   );
 
                   this.logger.log(
-                    'ScrapeCommand.run',
+                    'ScrapeCommand.run:87',
                     `Enqueued show at ${show.time} (${idCounter}) from ${moment(
                       date.toISOString()
                     ).format('YYYY-MM-DD')} for scraping`
@@ -109,7 +109,7 @@ export class ScrapeCommand {
           }
 
           this.logger.log(
-            'ScrapeCommand.run',
+            'ScrapeCommand.run:111',
             `Enqueued show at ${show.time} (${show.showId}) from ${moment(
               show.date
             ).format('YYYY-MM-DD')} for saving to database`
@@ -122,22 +122,22 @@ export class ScrapeCommand {
         // TODO: log result to logfile
 
         if (!result.length) {
-          this.logger.log('ScrapeCommand.run', 'No new shows added!');
+          this.logger.log('ScrapeCommand.run:125', 'No new shows added!');
         }
         result.forEach((show: IShow) => {
           this.logger.log(
-            'ScrapeCommand.run',
+            'ScrapeCommand.run:128',
             `Added show from ${moment(show.date).format('YYYY-MM-DD')} ${
               show.time
             } (${show.showId}) to database`
           );
         });
       })
-      .catch((error: { type: string; code?: number; query?: string }) => {
+      .catch(error => {
         if (error.type === 'http') {
-          this.logger.error('ScrapeCommand.run', error);
+          this.logger.error('ScrapeCommand.run:138', error);
         } else {
-          this.logger.error('ScrapeCommand.run', error);
+          this.logger.error('ScrapeCommand.run:140', error);
         }
       })
       .finally(() => {
