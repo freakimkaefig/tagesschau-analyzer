@@ -57,7 +57,7 @@ export class ScrapeCommand {
             );
 
             // Iterate over diff days
-            for (let i = 0; i < diff; i++) {
+            for (let i = 1; i < diff; i++) {
               date.add(1, 'days');
               const dow = date.day();
 
@@ -65,7 +65,7 @@ export class ScrapeCommand {
               if (airtimes[dow].times.includes(show.time)) {
                 // temporary time object for comparison
                 const tempShowTime = moment(
-                  moment(show.date).format('YYYY-MM-DD ' + show.time),
+                  moment(show.date).format('YYYY-MM-DD') + ' ' + show.time,
                   'YYYY-MM-DD HH-mm'
                 );
 
@@ -193,9 +193,14 @@ export class ScrapeCommand {
 
         if (data) {
           show.ut = true;
-          show.text = this.traverse(
+          const traversedText = this.traverse(
             data['tt:tt']['tt:body']['tt:div']['tt:p']
-          ).join('\n');
+          );
+          if (traversedText) {
+            show.text = traversedText.join('\n');
+          } else {
+            return Promise.resolve(false);
+          }
         }
 
         return Promise.resolve(show);

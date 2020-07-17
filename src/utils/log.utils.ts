@@ -11,7 +11,7 @@ export class LogClient {
         winston.format.timestamp({
           format: 'YYYY-MM-DD HH:mm:ss',
         }),
-        winston.format.json()
+        winston.format.prettyPrint()
       ),
       transports: [
         new winston.transports.DailyRotateFile({

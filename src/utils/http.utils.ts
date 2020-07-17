@@ -33,12 +33,11 @@ export class HttpClient {
         res.on('end', () => {
           try {
             json = parser.parse(xml, { ignoreAttributes: false });
+            resolve(json);
           } catch (error) {
             this.logger.error('HttpClient.get', error);
             resolve(false);
           }
-
-          resolve(json);
         });
       });
 
