@@ -10,7 +10,7 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "nx": "nx",
     "start": "node dist/apps/api/main",
-    "build": "ng affected:build --prod",
+    "build": "ng run-many --target=build --all --prod",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -29,7 +29,7 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "serve:ui": "nx serve --project tagesschau-analyzer --port 4200 --disable-host-check --aot"
+    "serve": "nx serve --project tagesschau-analyzer --port 4200 --disable-host-check --aot"
   },
   "private": true,
   "dependencies": {
