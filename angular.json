@@ -198,15 +198,34 @@
         }
       }
     },
-    "api-interfaces": {
-      "root": "libs/api-interfaces",
-      "sourceRoot": "libs/api-interfaces/src",
+    "api-mongodb": {
+      "root": "libs/api/mongodb",
+      "sourceRoot": "libs/api/mongodb/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+            "lintFilePatterns": ["libs/api/mongodb/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/mongodb"],
+          "options": {
+            "jestConfig": "libs/api/mongodb/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/api/mongodb",
+            "tsConfig": "libs/api/mongodb/tsconfig.lib.json",
+            "packageJson": "libs/api/mongodb/package.json",
+            "main": "libs/api/mongodb/src/index.ts",
+            "assets": ["libs/api/mongodb/*.md"]
           }
         }
       }

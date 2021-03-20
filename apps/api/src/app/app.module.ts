@@ -1,11 +1,27 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import {
+  ApiMongodbConfigService,
+  ApiMongodbModule,
+} from '@tagesschau-analyzer/api/mongodb';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.dev.env',
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      useClass: ApiMongodbConfigService,
+    }),
+
+    ApiMongodbModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

@@ -1,15 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 
-import { Message } from '@tagesschau-analyzer/api-interfaces';
-
-import { AppService } from './app.service';
+import { ShowService } from '@tagesschau-analyzer/api/mongodb';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly showService: ShowService) {}
 
-  @Get('hello')
-  getData(): Message {
-    return this.appService.getData();
+  @Get('count')
+  async count(): Promise<number> {
+    return await this.showService.getCount();
   }
 }

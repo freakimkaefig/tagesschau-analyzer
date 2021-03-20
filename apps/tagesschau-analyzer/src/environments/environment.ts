@@ -4,6 +4,10 @@
 
 export const environment = {
   production: false,
+
+  app: 'http://tagesschau-analyzer.local',
+
+  api: 'http://tagesschau-analyzer.local/api',
 };
 
 /*
