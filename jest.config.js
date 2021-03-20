@@ -3,5 +3,6 @@ module.exports = {
     '<rootDir>/apps/tagesschau-analyzer',
     '<rootDir>/apps/api',
     '<rootDir>/libs/api/mongodb',
+    '<rootDir>/libs/api/queue',
   ],
 };

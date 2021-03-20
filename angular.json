@@ -229,6 +229,27 @@
           }
         }
       }
+    },
+    "api-queue": {
+      "root": "libs/api/queue",
+      "sourceRoot": "libs/api/queue/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/api/queue/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/queue"],
+          "options": {
+            "jestConfig": "libs/api/queue/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
