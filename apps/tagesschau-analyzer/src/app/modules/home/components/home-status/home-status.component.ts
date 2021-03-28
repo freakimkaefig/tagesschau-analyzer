@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ShowService } from '../../../../core/services/show.service';
 
 @Component({
-  selector: 'tagesschau-analyzer-home-status',
+  selector: 'app-home-status',
   templateUrl: './home-status.component.html',
   styleUrls: ['./home-status.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

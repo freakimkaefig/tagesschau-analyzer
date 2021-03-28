@@ -10,7 +10,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'tagesschau-analyzer-page-container',
+  selector: 'app-page-container',
   templateUrl: './page-container.component.html',
   styleUrls: ['./page-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

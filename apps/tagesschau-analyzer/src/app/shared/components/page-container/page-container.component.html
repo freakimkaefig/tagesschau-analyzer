@@ -1,7 +1,5 @@
 <div class="page-container" [class.is-mobile]="mobileQuery.matches">
-  <tagesschau-analyzer-header
-    (toggleMenuEvent)="onToggleMenu()"
-  ></tagesschau-analyzer-header>
+  <app-header (toggleMenuEvent)="onToggleMenu()"></app-header>
 
   <mat-sidenav-container
     class="sidenav-container"
