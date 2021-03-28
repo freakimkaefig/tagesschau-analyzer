@@ -1,17 +1,12 @@
 {
   "version": 1,
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "packageManager": "npm"
   },
   "defaultProject": "tagesschau-analyzer",
   "schematics": {
     "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
       "storybook-configuration": {
         "linter": "eslint"
       }
@@ -20,12 +15,14 @@
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "e2eTestRunner": "cypress",
+      "strict": true
     },
     "@nrwl/angular:library": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": true
     },
     "@nrwl/angular:component": {
       "style": "scss"
@@ -36,7 +33,7 @@
       "projectType": "application",
       "root": "apps/tagesschau-analyzer",
       "sourceRoot": "apps/tagesschau-analyzer/src",
-      "prefix": "tagesschau-analyzer",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -51,7 +48,9 @@
               "apps/tagesschau-analyzer/src/favicon.ico",
               "apps/tagesschau-analyzer/src/assets"
             ],
-            "styles": ["apps/tagesschau-analyzer/src/styles.scss"],
+            "styles": [
+              "apps/tagesschau-analyzer/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -72,13 +71,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ]
             }
@@ -113,7 +112,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/tagesschau-analyzer"],
+          "outputs": [
+            "coverage/apps/tagesschau-analyzer"
+          ],
           "options": {
             "jestConfig": "apps/tagesschau-analyzer/jest.config.js",
             "passWithNoTests": true
@@ -142,7 +143,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/tagesschau-analyzer-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/tagesschau-analyzer-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -155,12 +158,16 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -185,12 +192,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/api"],
+          "outputs": [
+            "coverage/apps/api"
+          ],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
@@ -206,12 +217,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/api/mongodb/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api/mongodb/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api/mongodb"],
+          "outputs": [
+            "coverage/libs/api/mongodb"
+          ],
           "options": {
             "jestConfig": "libs/api/mongodb/jest.config.js",
             "passWithNoTests": true
@@ -219,13 +234,17 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/libs/api/mongodb",
             "tsConfig": "libs/api/mongodb/tsconfig.lib.json",
             "packageJson": "libs/api/mongodb/package.json",
             "main": "libs/api/mongodb/src/index.ts",
-            "assets": ["libs/api/mongodb/*.md"]
+            "assets": [
+              "libs/api/mongodb/*.md"
+            ]
           }
         }
       }
@@ -238,12 +257,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/api/queue/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api/queue/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api/queue"],
+          "outputs": [
+            "coverage/libs/api/queue"
+          ],
           "options": {
             "jestConfig": "libs/api/queue/jest.config.js",
             "passWithNoTests": true

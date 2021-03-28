@@ -29,7 +29,8 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "serve": "nx serve --project tagesschau-analyzer --port 4200 --disable-host-check --aot"
+    "serve": "nx serve --project tagesschau-analyzer --port 4200 --disable-host-check --aot",
+    "preinstall": "(npm uninstall codelyzer || echo ✅ Codelyzer is already removed.) && (npm uninstall tslint || echo ✅ TSLint is already removed.)"
   },
   "private": true,
   "dependencies": {

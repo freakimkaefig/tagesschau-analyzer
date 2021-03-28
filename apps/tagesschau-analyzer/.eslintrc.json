@@ -16,7 +16,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "tagesschau-analyzer",
+            "prefix": "app",
             "style": "camelCase"
           }
         ],
@@ -24,7 +24,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "tagesschau-analyzer",
+            "prefix": "app",
             "style": "kebab-case"
           }
         ]
