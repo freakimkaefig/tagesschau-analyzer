@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
 
-  app: 'http://tagesschau-analyzer.herokuapp.com/',
+  app: 'https://tagesschau-analyzer.herokuapp.com/',
 
-  api: 'http://tagesschau-analyzer.herokuapp.com/api',
+  api: 'https://tagesschau-analyzer.herokuapp.com/api',
 };
