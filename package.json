@@ -1,6 +1,6 @@
 {
   "name": "tagesschau-analyzer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "engines": {
     "node": "14.x"
