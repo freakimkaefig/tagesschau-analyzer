@@ -38,7 +38,7 @@ export class Scraper {
 
             const show = await this.scrapeShow(idCounter, lastShow.time, date);
             if (show) {
-              this.mongoClient.addShow(show);
+              await this.mongoClient.addShow(show);
             }
           }
         }
