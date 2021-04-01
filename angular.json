@@ -48,9 +48,7 @@
               "apps/tagesschau-analyzer/src/favicon.ico",
               "apps/tagesschau-analyzer/src/assets"
             ],
-            "styles": [
-              "apps/tagesschau-analyzer/src/styles.scss"
-            ],
+            "styles": ["apps/tagesschau-analyzer/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -112,9 +110,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/tagesschau-analyzer"
-          ],
+          "outputs": ["coverage/apps/tagesschau-analyzer"],
           "options": {
             "jestConfig": "apps/tagesschau-analyzer/jest.config.js",
             "passWithNoTests": true
@@ -143,9 +139,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/tagesschau-analyzer-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/tagesschau-analyzer-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -158,16 +152,12 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -192,16 +182,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/api/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/api"
-          ],
+          "outputs": ["coverage/apps/api"],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
@@ -217,16 +203,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/api/mongodb/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/api/mongodb/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/api/mongodb"
-          ],
+          "outputs": ["coverage/libs/api/mongodb"],
           "options": {
             "jestConfig": "libs/api/mongodb/jest.config.js",
             "passWithNoTests": true
@@ -234,41 +216,65 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/api/mongodb",
             "tsConfig": "libs/api/mongodb/tsconfig.lib.json",
             "packageJson": "libs/api/mongodb/package.json",
             "main": "libs/api/mongodb/src/index.ts",
-            "assets": [
-              "libs/api/mongodb/*.md"
-            ]
+            "assets": ["libs/api/mongodb/*.md"]
           }
         }
       }
     },
-    "api-queue": {
-      "root": "libs/api/queue",
-      "sourceRoot": "libs/api/queue/src",
-      "projectType": "library",
+    "scraper": {
+      "root": "apps/scraper",
+      "sourceRoot": "apps/scraper/src",
+      "projectType": "application",
+      "prefix": "scraper",
       "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/scraper",
+            "main": "apps/scraper/src/main.ts",
+            "tsConfig": "apps/scraper/tsconfig.app.json",
+            "assets": ["apps/scraper/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/scraper/src/environments/environment.ts",
+                  "with": "apps/scraper/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "scraper:build",
+            "inspect": false,
+            "watch": false
+          }
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/api/queue/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/scraper/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/api/queue"
-          ],
+          "outputs": ["coverage/apps/scraper"],
           "options": {
-            "jestConfig": "libs/api/queue/jest.config.js",
+            "jestConfig": "apps/scraper/jest.config.js",
             "passWithNoTests": true
           }
         }

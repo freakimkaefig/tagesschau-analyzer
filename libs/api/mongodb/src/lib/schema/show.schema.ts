@@ -21,7 +21,7 @@ export class Show {
   text: string;
 
   @Prop({ required: false, type: mongoose.Schema.Types.Mixed })
-  entities: any;
+  entities?: any;
 }
 
 export const ShowSchema = SchemaFactory.createForClass(Show);
