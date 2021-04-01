@@ -157,7 +157,8 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": ["apps/api/src/assets"],
+            "maxWorkers": 1
           },
           "configurations": {
             "production": {
@@ -222,7 +223,8 @@
             "tsConfig": "libs/api/mongodb/tsconfig.lib.json",
             "packageJson": "libs/api/mongodb/package.json",
             "main": "libs/api/mongodb/src/index.ts",
-            "assets": ["libs/api/mongodb/*.md"]
+            "assets": ["libs/api/mongodb/*.md"],
+            "maxWorkers": 1
           }
         }
       }
@@ -240,7 +242,8 @@
             "outputPath": "dist/apps/scraper",
             "main": "apps/scraper/src/main.ts",
             "tsConfig": "apps/scraper/tsconfig.app.json",
-            "assets": ["apps/scraper/src/assets"]
+            "assets": ["apps/scraper/src/assets"],
+            "maxWorkers": 1
           },
           "configurations": {
             "production": {
