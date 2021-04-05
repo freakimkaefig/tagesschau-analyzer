@@ -5,11 +5,9 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./modules/home/home.module').then((mod) => mod.HomeModule),
-  },
-  {
-    path: '**',
-    redirectTo: '/',
+      import('./tagesschau-analyzer/tagesschau-analyzer.module').then(
+        (mod) => mod.TagesschauAnalyzerModule
+      ),
   },
 ];
 

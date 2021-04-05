@@ -1,0 +1,38 @@
+.show-list {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  .show-list-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    .show-list-table-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      width: 100%;
+      height: 100%;
+
+      .show-list-table {
+        flex: 1;
+
+        width: 100%;
+        height: 100%;
+
+        overflow-y: auto;
+
+        table {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

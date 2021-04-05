@@ -1,0 +1,7 @@
+<p>
+  Show count:
+  <ng-container *ngIf="!(inProgress$ | async); else loading">
+    {{ count$ | async }}
+  </ng-container>
+  <ng-template #loading> ... </ng-template>
+</p>

@@ -10,6 +10,7 @@ import {
 } from '@tagesschau-analyzer/api/mongodb';
 
 import { AppController } from './app.controller';
+import { ShowsModule } from './shows/shows.module';
 
 @Module({
   imports: [
@@ -28,6 +29,8 @@ import { AppController } from './app.controller';
     }),
 
     ApiMongodbModule,
+
+    ShowsModule,
   ],
   controllers: [AppController],
   providers: [],

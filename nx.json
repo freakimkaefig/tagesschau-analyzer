@@ -23,6 +23,7 @@
     },
     "api": { "tags": [] },
     "api-mongodb": { "tags": [] },
-    "scraper": { "tags": [] }
+    "scraper": { "tags": [] },
+    "core-types": { "tags": [] }
   }
 }
