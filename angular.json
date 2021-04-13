@@ -301,6 +301,17 @@
             "jestConfig": "libs/core/types/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/core/types",
+            "tsConfig": "libs/core/types/tsconfig.lib.json",
+            "packageJson": "libs/core/types/package.json",
+            "main": "libs/core/types/src/index.ts",
+            "assets": ["libs/core/types/*.md"]
+          }
         }
       }
     }
