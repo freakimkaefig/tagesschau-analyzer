@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { SharedModule } from '../../../../shared/shared.module';
+
 import { ShowsPage } from './shows.page';
 
 describe('ShowsPage', () => {
@@ -8,9 +10,9 @@ describe('ShowsPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShowsPage ]
-    })
-    .compileComponents();
+      declarations: [ShowsPage],
+      imports: [SharedModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
