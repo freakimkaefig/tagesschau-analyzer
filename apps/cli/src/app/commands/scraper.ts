@@ -4,8 +4,8 @@ import * as parser from 'fast-xml-parser';
 
 import { Show } from '@tagesschau-analyzer/api/mongodb';
 
-import { AIRTIMES, TIMES } from './config';
-import { MongoClient } from './utils/mongo.utils';
+import { AIRTIMES, TIMES } from '../config/scraper.config';
+import { MongoClient } from '../utils/mongo.utils';
 
 export class Scraper {
   private mongoClient: MongoClient;
