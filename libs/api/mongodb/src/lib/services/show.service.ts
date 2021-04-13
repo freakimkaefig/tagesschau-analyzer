@@ -1,6 +1,9 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+
+import { SortDirection } from '@tagesschau-analyzer/core/types';
+
 import { Show, ShowDocument } from '../schema/show.schema';
 
 @Injectable()
@@ -11,8 +14,20 @@ export class ShowService {
     return await this.showModel.countDocuments();
   }
 
-  async getShows(): Promise<Show[]> {
-    return await this.showModel.find({}).lean();
+  async getShows(
+    limit = 50,
+    offset = 0,
+    sortKey: string,
+    sortDirection: SortDirection
+  ): Promise<Show[]> {
+    return await this.showModel
+      .find({})
+      .limit(limit)
+      .skip(offset)
+      .sort({
+        [sortKey]: sortDirection,
+      })
+      .lean();
   }
 
   async getLastShow(time: string): Promise<Show> {

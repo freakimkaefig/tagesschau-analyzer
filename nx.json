@@ -23,6 +23,7 @@
     },
     "api": { "tags": [] },
     "api-mongodb": { "tags": [] },
-    "api-queue": { "tags": [] }
+    "cli": { "tags": [] },
+    "core-types": { "tags": [] }
   }
 }

@@ -19,7 +19,7 @@
         "libs/api-interfaces/src/index.ts"
       ],
       "@tagesschau-analyzer/api/mongodb": ["libs/api/mongodb/src/index.ts"],
-      "@tagesschau-analyzer/api/queue": ["libs/api/queue/src/index.ts"]
+      "@tagesschau-analyzer/core/types": ["libs/core/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

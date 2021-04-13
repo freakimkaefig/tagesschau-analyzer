@@ -1,3 +1,5 @@
+@import '../../styles/index.scss';
+
 .page-container {
   display: flex;
   flex-direction: column;
@@ -11,10 +13,16 @@
     /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
        causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
     flex: 1;
-  }
 
-  .sidenav-content {
-    padding: 8px;
+    .mat-sidenav {
+      .mat-nav-list {
+        .mat-list-item {
+          &.active {
+            background-color: $color-blue-grey-1;
+          }
+        }
+      }
+    }
   }
 
   &.is-mobile {

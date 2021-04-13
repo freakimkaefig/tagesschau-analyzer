@@ -48,9 +48,7 @@
               "apps/tagesschau-analyzer/src/favicon.ico",
               "apps/tagesschau-analyzer/src/assets"
             ],
-            "styles": [
-              "apps/tagesschau-analyzer/src/styles.scss"
-            ],
+            "styles": ["apps/tagesschau-analyzer/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -112,9 +110,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/tagesschau-analyzer"
-          ],
+          "outputs": ["coverage/apps/tagesschau-analyzer"],
           "options": {
             "jestConfig": "apps/tagesschau-analyzer/jest.config.js",
             "passWithNoTests": true
@@ -143,9 +139,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/tagesschau-analyzer-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/tagesschau-analyzer-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -158,16 +152,13 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"],
+            "maxWorkers": 1
           },
           "configurations": {
             "production": {
@@ -192,16 +183,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/api/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/api"
-          ],
+          "outputs": ["coverage/apps/api"],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
@@ -217,16 +204,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/api/mongodb/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/api/mongodb/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/api/mongodb"
-          ],
+          "outputs": ["coverage/libs/api/mongodb"],
           "options": {
             "jestConfig": "libs/api/mongodb/jest.config.js",
             "passWithNoTests": true
@@ -234,42 +217,100 @@
         },
         "build": {
           "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/api/mongodb",
             "tsConfig": "libs/api/mongodb/tsconfig.lib.json",
             "packageJson": "libs/api/mongodb/package.json",
             "main": "libs/api/mongodb/src/index.ts",
-            "assets": [
-              "libs/api/mongodb/*.md"
-            ]
+            "assets": ["libs/api/mongodb/*.md"],
+            "maxWorkers": 1
           }
         }
       }
     },
-    "api-queue": {
-      "root": "libs/api/queue",
-      "sourceRoot": "libs/api/queue/src",
+    "cli": {
+      "root": "apps/cli",
+      "sourceRoot": "apps/cli/src",
+      "projectType": "application",
+      "prefix": "cli",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/cli",
+            "main": "apps/cli/src/main.ts",
+            "tsConfig": "apps/cli/tsconfig.app.json",
+            "assets": ["apps/cli/src/assets"],
+            "maxWorkers": 1
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/cli/src/environments/environment.ts",
+                  "with": "apps/cli/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "cli:build",
+            "inspect": false,
+            "watch": false
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/cli/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/cli"],
+          "options": {
+            "jestConfig": "apps/cli/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "core-types": {
+      "root": "libs/core/types",
+      "sourceRoot": "libs/core/types/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/api/queue/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/core/types/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/api/queue"
-          ],
+          "outputs": ["coverage/libs/core/types"],
           "options": {
-            "jestConfig": "libs/api/queue/jest.config.js",
+            "jestConfig": "libs/core/types/jest.config.js",
             "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/core/types",
+            "tsConfig": "libs/core/types/tsconfig.lib.json",
+            "packageJson": "libs/core/types/package.json",
+            "main": "libs/core/types/src/index.ts",
+            "assets": ["libs/core/types/*.md"]
           }
         }
       }

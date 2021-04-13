@@ -1,0 +1,12 @@
+@use 'sass:map';
+
+$color-pink-1: map.get($mat-pink, 500);
+$color-pink-2: map.get($mat-pink, 300);
+$color-pink-3: map.get($mat-pink, 100);
+
+$color-blue-grey-1: map.get($mat-blue-grey, 500);
+$color-blue-grey-2: map.get($mat-blue-grey, 300);
+$color-blue-grey-3: map.get($mat-blue-grey, 100);
+
+$color-primary: $color-pink-1;
+$color-accent: $color-blue-grey-1;

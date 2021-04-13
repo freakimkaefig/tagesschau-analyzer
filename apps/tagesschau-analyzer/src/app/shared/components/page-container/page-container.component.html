@@ -12,7 +12,17 @@
       fixedTopGap="56"
     >
       <mat-nav-list>
-        <a mat-list-item routerLink=".">Home</a>
+        <!-- Home -->
+        <a
+          mat-list-item
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+
+        <!-- Shows -->
+        <a mat-list-item routerLink="/shows" routerLinkActive="active">Shows</a>
       </mat-nav-list>
     </mat-sidenav>
 
