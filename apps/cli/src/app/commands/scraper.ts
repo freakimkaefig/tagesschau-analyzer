@@ -91,7 +91,7 @@ export class Scraper {
         time,
         showId,
         ut: true,
-        text: subtitleText.join('\n'),
+        text: subtitleText.join(' '),
       };
     } catch (error) {
       // Ignore errors for now, blame daserste.de
