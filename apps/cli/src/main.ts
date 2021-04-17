@@ -16,7 +16,7 @@ function bootstrap() {
 
   program
     .command('analyze')
-    .description('Analyzes shows.')
+    .description('Analyzes not already analyzed shows.')
     .action(() => {
       const analyzer = new Analyzer();
       analyzer.run();

@@ -37,6 +37,7 @@ export class MongoClient {
     let connectionConfig: mongoose.ConnectOptions = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
       user: MONGO_USER,
       pass: MONGO_PASSWORD,
     };
@@ -46,8 +47,6 @@ export class MongoClient {
       connectionConfig = {
         ...connectionConfig,
         ssl: true,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         useCreateIndex: true,
       };
     } else {
@@ -107,5 +106,53 @@ export class MongoClient {
 
   async addShow(show: Show): Promise<void> {
     await this.showModel.create(show);
+  }
+
+  async getUnanalyzedShows(): Promise<Show[]> {
+    return await this.showModel
+      .find({
+        ut: true,
+        entities: { $exists: false },
+      })
+      .sort({
+        showId: -1,
+      })
+      .lean<Show[]>();
+  }
+
+  async addAnalysisToShow(
+    time: string,
+    showId: number,
+    entities: any[],
+    syntax: any[]
+  ): Promise<void> {
+    await this.showModel.findOneAndUpdate(
+      { time, showId },
+      {
+        $set: {
+          entities,
+          syntax,
+        },
+      }
+    );
+  }
+
+  async transformNewlinesToSpaces(): Promise<void> {
+    const shows = await this.showModel.find({ ut: true });
+
+    for (let i = 0; i < shows.length; i++) {
+      console.log(shows[i].time, shows[i].showId);
+      await this.showModel.findOneAndUpdate(
+        {
+          time: shows[i].time,
+          showId: shows[i].showId,
+        },
+        {
+          $set: {
+            text: shows[i].text.replace(/\n/g, ' '),
+          },
+        }
+      );
+    }
   }
 }

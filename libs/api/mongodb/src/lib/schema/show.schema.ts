@@ -22,6 +22,12 @@ export class Show {
 
   @Prop({ required: false, type: mongoose.Schema.Types.Mixed })
   entities?: any;
+
+  @Prop({ required: false, type: mongoose.Schema.Types.Mixed })
+  syntax?: any;
+
+  @Prop({ required: false, type: mongoose.Schema.Types.Mixed })
+  classifiaction?: any;
 }
 
 export const ShowSchema = SchemaFactory.createForClass(Show);
