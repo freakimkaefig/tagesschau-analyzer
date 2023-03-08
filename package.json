@@ -48,7 +48,7 @@
     "@google-cloud/language": "^4.2.2",
     "@nestjs/common": "^7.0.0",
     "@nestjs/config": "^0.6.3",
-    "@nestjs/core": "^7.0.0",
+    "@nestjs/core": "^9.0.5",
     "@nestjs/mongoose": "^7.2.4",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/serve-static": "^2.1.4",
